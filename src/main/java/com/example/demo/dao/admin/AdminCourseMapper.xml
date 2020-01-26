@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.admin.AdminCourseMapper">
+    <!--查询所有班级-->
+    <select id="findClassName" resultType="Class">
+        SELECT className,id FROM class
+    </select>
+
+    <!--查询所有老师-->
+    <select id="findTea_name" resultType="Teacher">
+        SELECT id,tea_name FROM teacher
+    </select>
+    <!--添加课程信息-->
+    <insert id="courseAdd" parameterType="Course">
+        INSERT INTO course (course_name,class_id,courseDate,tea_id)
+        VALUES(#{course_name},#{class_id},#{courseDate},#{tea_id})
+    </insert>
+
+    <!--查询课程信息-->
+    <select id="findCourse" resultType="Course">
+        SELECT c.course_id,c.course_name,a.className,t.tea_name,c.courseDate FROM course AS c,class AS a,teacher t
+        WHERE c.class_id=a.id AND c.tea_id=t.id
+    </select>
+
+    <!--根据course_id查询代课信息-->
+    <select id="findCourseByCourse_id" resultType="Course" parameterType="int">
+        SELECT c.course_id,c.course_name,a.className,t.tea_name,c.courseDate FROM course AS c,class AS a,teacher t
+        WHERE c.class_id=a.id AND c.tea_id=t.id AND c.`course_id`=#{course_id}
+    </select>
+
+    <!--修改科目信息-->
+    <update id="updateCourse" parameterType="Course">
+        UPDATE course SET course_name=#{course_name},class_id=#{class_id},courseDate=#{courseDate} WHERE course_id
+        =#{course_id}
+    </update>
+</mapper>

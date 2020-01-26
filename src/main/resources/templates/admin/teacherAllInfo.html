@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学生信息</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="layui/css/layui.css" type="text/css"/>
+    <script type="text/javascript" src="layui/layui.js"></script>
+    <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+    <style type="text/css">
+        .div_list {
+            width: 75%;
+            margin: auto;
+            margin-top: 50px;
+            margin-left: 13%;
+        }
+
+        .div_select {
+            width: 55%;
+            margin: auto;
+            margin-top: 50px;
+            margin-left: 20%;
+        }
+
+        font {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        table {
+            margin: 0 auto;
+
+        }
+
+        table tr td {
+            text-align: center;
+            width: 150px;
+            height: 40px;
+        }
+
+        a {
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #form1 {
+            width: 200px;
+            display: inline-block
+        }
+
+        .panelpanel-default {
+            width: 82%;
+            height: 60%;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $(".sc").click(function () {
+                //获取input节点 我们删除节点 findTeacherByCount
+                var r = confirm("确定要删除吗？");
+                if (r) {
+                    var json = {id: $(this).prev().val()};
+                    $.ajax({
+                        type: "GET",
+                        url: "deleteByStu_id_Teacher",
+                        data: json,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data == 1) {
+                                alert("已经删除！");
+                                window.location.reload();
+                                return true;
+                            }
+                            return false;
+                        }
+                    });
+                } else {
+                    alert("已经取消删除！");
+                    window.location.reload();
+                }
+            });
+
+        });
+    </script>
+</head>
+<body>
+<div class="panelpanel-default" style="margin-left: 15%">
+    <div class="panel-heading">查看老师信息</div>
+    <table class="layui-table" lay-size="sm">
+        <colgroup>
+            <col width="150">
+            <col width="100">
+            <col>
+        </colgroup>
+        <thead>
+        <thead class="layui-table" lay-size="sm">
+        <colgroup>
+            <col width="150">
+            <col width="200">
+            <col>
+        </colgroup>
+        </thead>
+        <thead>
+        <tr>
+            <td>工号</td>
+            <td>姓名</td>
+            <td>性别</td>
+            <td>年龄</td>
+            <td>所任班级</td>
+            <td>电话</td>
+            <td>地址</td>
+            <td>身份证</td>
+            <td>邮箱</td>
+            <td>入职时间</td>
+            <td>操作</td>
+        </tr>
+        </thead>
+        <tr th:each="teachers : ${teacher}">
+            <td th:text="${teachers.tea_num}">${list.getTeaNum() }</td>
+            <td th:text="${teachers.tea_name}">${list.getTeaName() }</td>
+            <td th:text="${teachers.tea_sex}">${list.getTeaSex() }</td>
+            <td th:text="${teachers.tea_age}">${list.getTeaAge() }</td>
+            <td th:text="${teachers.className}">${list.getTeaCourse() }</td>
+            <td th:text="${teachers.phone}">${list.getMajor() }</td>
+            <td th:text="${teachers.address}">${list.getDepartment() }</td>
+            <td th:text="${teachers.card}">${list.getDepartment() }</td>
+            <td th:text="${teachers.email}">${list.getDepartment() }</td>
+            <td th:text="${teachers.enrolldate}">${list.getDepartment() }</td>
+            <td>
+                <input type="hidden" id="id" th:value="${teachers.id}">
+                <a href="#" class="sc">删除</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<script>
+    //Demo
+    layui.use('form', function () {
+        var form = layui.form;
+    });
+</script>
+
+</body>
+</html>

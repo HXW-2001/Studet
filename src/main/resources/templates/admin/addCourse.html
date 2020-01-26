@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title></title>
+
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="This is my page">
+    <style type="text/css">
+        .div_ads {
+            width: 75%;
+            margin: auto;
+            margin-top: 50px;
+            margin-left: 20%;
+        }
+
+        .layui-form-item {
+            width: 600px;
+            height: 50px;
+        }
+
+        .attr {
+            letter-spacing: 20px;
+        }
+
+        font {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="layui/css/layui.css" rel="stylesheet"/>
+    <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+    <script src="layui/layui.js"></script>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            layui.use('form', function () {
+                var form = layui.form;
+
+                /*   //监听提交
+                 form.on('submit(formDemo)', function(data){
+                 return false;
+                 });*/
+            });
+
+        });
+
+    </script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+</head>
+<body>
+<div align="center" class="xtn">
+    <div class="studnet" align="center"><h2>添加课程</h2><br/></div>
+    <form class="layui-form layui-form-pane" action="/courseAdd" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">课程名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="course_name" autocomplete="off"
+                       placeholder="请输入课程名称" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" style="padding-left: -60%">
+            <label class="layui-form-label">所学班级:</label>
+            <div class="layui-input-block">
+                <select name="class_id" lay-verify="required">
+                    <option value="0">请选择班级</option>
+                    <option th:each="classNames : ${className}" th:value="${classNames.id}"
+                            th:text="${classNames.className}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="padding-left: -60%">
+            <label class="layui-form-label">代课老师:</label>
+            <div class="layui-input-block">
+                <select name="tea_id" lay-verify="required">
+                    <option value="0">请选择代课老师</option>
+                    <option th:each="tea_name : ${tea_name}" th:value="${tea_name.id}"
+                            th:text="${tea_name.tea_name}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">开课时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="courseDate" autocomplete="off"
+                       placeholder="请输入开课时间" class="layui-input">
+            </div>
+        </div>
+        <input type="hidden" name="stu_id">
+        <div class="layui-form-item" id="div_Sub" align="center">
+            <div class="layui-input-block">
+                <button class="layui-btn" type="submit" lay-submit lay-filter="formDemo" id="tj"
+                        style="margin-right:30px">立即提交
+                </button>
+                <button type="reset" class="layui-btn layui-btn-primary" id="cz" style="margin-right:210px">重置
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+//
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.admin.AdminTeacherMapper">
+
+    <!--添加老师账号-->
+    <insert id="addTeacher_account" parameterType="Teacher">
+        INSERT INTO teacher
+        (tea_name,tea_num,tea_sex,class_id,tea_age,phone,address,card,enrolldate,email,account,randow,`password`)
+        VALUES(#{tea_name},#{tea_num},#{tea_sex},#{class_id},#{tea_age},#{phone},#{address},#{card},#{enrolldate},#{email},#{account},#{randow},#{password})
+    </insert>
+
+    <!--查询老师信息-->
+    <select id="findTeacherGeRen" resultType="Teacher">
+        SELECT
+        t.`id`,
+        t.`tea_num`,
+        t.`tea_name`,
+        t.`tea_sex`,
+        t.`tea_age`,
+        c.`className`,
+        t.`phone`,
+        t.`enrolldate`,
+        t.`address`,
+        t.`card`,
+        t.`email`
+        FROM
+        teacher AS t,
+        class AS c
+        WHERE
+        t.`class_id` = c.`id`
+    </select>
+
+    <!--查询删除老师是否代课-->
+    <select id="findTeacherByCount" parameterType="int" resultType="int">
+        SELECT COUNT(0) FROM class AS c,teacher AS t WHERE c.`id`=t.`class_id` AND t.`id` =#{id}
+    </select>
+
+    <!--删除老师信息-->
+    <delete id="deleteByStu_id_Teacher" parameterType="int">
+        DELETE FROM teacher WHERE id = #{id}
+    </delete>
+
+</mapper>

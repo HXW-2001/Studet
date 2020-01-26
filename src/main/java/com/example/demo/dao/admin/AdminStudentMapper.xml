@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.admin.AdminStudentMapper">
+
+    <!--学生信息查询-->
+    <select id="findTeacher_XinXi" resultType="Student">
+        SELECT
+        s.stu_id,s.`stu_num`,s.`stu_name`,s.`stu_sex`,s.`stu_age`,a.`className`,s.`phone`,s.`relation`,s.`identity`,u.`course_name`,s.`address`,s.`department`,s.`entrydate`,s.`email`,o.`old_name`
+        FROM student AS s,class AS a,course AS u,teacher AS t,`old` AS o
+        WHERE s.class_id=a.`id` AND u.`class_id`=s.major_id AND a.`course_id`=t.`id` AND a.`old_id` =o.`id`
+    </select>
+
+    <!--查询学生所有账号-->
+    <select id="findStudent_Account" resultType="Student">
+        SELECT stu_num,stu_name,phone,entrydate,email,account FROM student
+    </select>
+</mapper>

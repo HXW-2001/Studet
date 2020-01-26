@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学生信息</title>
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="This is my page">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/register.js"></script>
+    <script type="application/javascript" src="jquery-3.2.1.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script type="application/javascript" src="layui/lay/layui.all.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/particle-bg.umd.min.js"></script>
+    <srcipt type="text/javaScript">
+
+        <script>
+            //Demo
+            layui.use('table', function () {
+                var table = layui.form;
+            });
+        </script>
+    </srcipt>
+    <style type="text/css">
+        .div_list {
+            width: 75%;
+            margin: auto;
+            margin-top: 50px;
+            margin-left: 13%;
+        }
+
+        .div_select {
+            width: 55%;
+            margin: auto;
+            margin-top: 50px;
+            margin-left: 20%;
+        }
+
+        font {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        table {
+            margin: 0 auto;
+
+        }
+
+        table tr td {
+            text-align: center;
+            width: 150px;
+            height: 40px;
+        }
+
+        a {
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #form1 {
+            width: 200px;
+            display: inline-block
+        }
+
+        .div_ads {
+            width: 40%;
+            margin: 0 auto;
+            margin-top: 30px;
+            margin-left: 30%;
+        }
+
+        #tableClass {
+            margin: 0 auto;
+            width: 80%;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $(".sc").click(function () {
+                //获取input节点 我们删除节点
+                var r = confirm("确定要删除吗？");
+                if (r) {
+                    var json = {stu_num: $(this).prev().prev().val()};
+                    $.ajax({
+                        type: "GET",
+                        url: "teChereliMinationStudent",
+                        data: json,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data == 1) {
+                                alert("已经删除！");
+                                window.location.reload();
+                                return true;
+                            }
+                            return false;
+                        }
+                    });
+                } else {
+                    alert("已经取消删除！");
+                    window.location.reload();
+                }
+            });
+
+        });
+    </script>
+</head>
+<body>
+<th:if th:if="${list != null}">
+    <div class="div_list">
+        <div class="panel panel-default" id="listOne">
+            <div class="panel-heading" align="center">查看学生信息</div>
+            <table class="layui-table" lay-size="sm">
+                <colgroup>
+                    <col width="350">
+                    <col width="350">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>学号</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>年纪</th>
+                    <th>年龄</th>
+                    <th>班级</th>
+                    <th>学生电话</th>
+                    <th>学生身份证</th>
+                    <th>教员</th>
+                    <th>所学课程</th>
+                    <th>学校</th>
+                    <th>家庭地址</th>
+                    <th>开班时间</th>
+                    <th>邮箱</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="lists : ${list}">
+                    <td th:text="${lists.stu_num}">心</td>
+                    <a href="#">
+                        <td th:text="${lists.stu_name}">贤心</td>
+                    </a>
+                    <td th:text="${lists.stu_sex}">贤心</td>
+                    <td th:text="${lists.old_name}">贤心</td>
+                    <td th:text="${lists.stu_age}">贤心</td>
+                    <td th:text="${lists.className}">贤心</td>
+                    <td th:text="${lists.phone}">贤心</td>
+                    <td th:text="${lists.identity}">贤心</td>
+                    <td th:text="${lists.tea_name}">贤心</td>
+                    <td th:text="${lists.course_name}">贤心</td>
+                    <td th:text="${lists.department}">贤心</td>
+                    <td th:text="${lists.address}">贤心</td>
+                    <td th:text="${lists.entrydate}">贤心</td>
+                    <td th:text="${lists.email}">贤心</td>
+                    <td>
+                        <input type="hidden" th:value="${lists.stu_num}" id="Stu_num">
+                        <a class="ck" th:href="@{/teCherStudnets(stu_num=${lists.stu_num})}">查看</a>
+                        <a class="sc">删除</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</th:if>
+
+<th:if th:if="${Student != null}">
+    <div class="div_ads panel panel-default">
+        <div class="panel-heading" align="center" style="font-size: 20px">学生信息</div>
+        <table class="table panel-body" id="tableClass">
+            <tr>
+                <td><label>学号:</label>
+                    <a th:text="${Student.stu_num}">sdasdasd</a>
+                </td>
+            </tr>
+            <tr>
+                <td><label>姓名:</label>
+                    <a th:text="${Student.stu_name}">sdasdasd</a>
+                </td>
+            </tr>
+            <tr>
+                <td><label>年纪:</label>
+                    <a th:text="${Student.old_name}">sdasdasd</a>
+                </td>
+            </tr>
+            <tr>
+                <td><label>年龄:</label>
+                    <a th:text="${Student.stu_age}">sdasdasd</a>
+                </td>
+            </tr>
+            <tr>
+                <td><label>班级:</label>
+                    <a th:text="${Student.className}">sdasdasd</a>
+                </td>
+            </tr>
+            <tr>
+                <td><label>教员:</label>
+                    <a th:text="${Student.tea_name}">sdasdasd</a>
+                </td>
+            </tr>
+
+            <tr>
+                <td><label style="margin-left: 5%">学校:</label>
+                    <a th:text="${Student.department}">sdasdasd</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label style="margin-left: -5%">课程:</label>
+                    <a th:text="${Student.course_name}">sdasdasd</a>
+                </td>
+            </tr>
+            <tr>
+                <td><label style="margin-left: 9%">电话:</label>
+                    <a th:text="${Student.phone}">sdasdasd</a>
+                </td>
+            </tr>
+            <tr>
+                <td><label style="margin-left: -3%">家庭住址:</label>
+                    <a th:text="${Student.address}">sdasdasd</a></td>
+            </tr>
+            <tr>
+                <td><label>开班时间:</label>
+                    <a th:text="${Student.entrydate}">sdasdasd</a>
+                </td>
+            </tr>
+            <tr>
+                <td><label>身份证:</label>
+                    <a th:text="${Student.identity}">sdasdasd</a>
+                </td>
+            </tr>
+            <tr>
+                <td><label>邮箱:</label>
+                    <a th:text="${Student.email}">sdasdasd</a>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;</td>
+            </tr>
+
+        </table>
+    </div>
+</th:if>
+
+
+</body>
+</html>

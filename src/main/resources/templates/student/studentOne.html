@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="This is my page">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style type="text/css">
+        .div_ads {
+            width: 40%;
+            margin: 0 auto;
+            margin-top: 30px;
+            margin-left: 30%;
+        }
+
+        #tableClass {
+            margin: 0 auto;
+            width: 50%;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="div_ads panel panel-default">
+    <div class="panel-heading" align="center" style="font-size: 20px">学生个人信息</div>
+    <table class="table panel-body" id="tableClass">
+        <tr>
+            <td>学&nbsp;&nbsp;&nbsp;号：</td>
+            <td th:text="${student.stu_num}"></td>
+        </tr>
+        <tr>
+            <td>姓&nbsp;&nbsp;&nbsp;名：</td>
+            <td th:text="${student.stu_name}"></td>
+        </tr>
+        <tr>
+            <td>性&nbsp;&nbsp;&nbsp;别：</td>
+            <td th:text="${student.stu_sex}"></td>
+        </tr>
+        <tr>
+            <td>年&nbsp;&nbsp;&nbsp;龄：</td>
+            <td th:text="${student.stu_age}"></td>
+        </tr>
+
+        <tr>
+            <td>班&nbsp;&nbsp;&nbsp;级：</td>
+            <td th:text="${student.className}"></td>
+        </tr>
+        <tr>
+            <td>学生电话：</td>
+            <td th:text="${student.phone}"></td>
+        </tr>
+        <tr>
+            <td>家长电话：</td>
+            <td th:text="${student.relation}"></td>
+        </tr>
+        <tr>
+            <td>身份证&nbsp;：</td>
+            <td th:text="${student.identity}"></td>
+        </tr>
+        <tr>
+            <td>家庭住址：</td>
+            <td th:text="${student.address}"></td>
+        </tr>
+        <tr>
+            <td>所学课程：</td>
+            <td th:text="${student.course_name}"></td>
+        </tr>
+        <tr>
+            <td>学 &nbsp;&nbsp;校：</td>
+            <td th:text="${student.department}"></td>
+        </tr>
+        <tr>
+            <td>入学时间：</td>
+            <td th:text="${student.entrydate}"></td>
+        </tr>
+
+        <tr>
+            <td>&nbsp;&nbsp;&nbsp;</td>
+            <td></td>
+        </tr>
+
+
+    </table>
+</div>
+</body>
+</html>

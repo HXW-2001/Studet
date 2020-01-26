@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="layui/css/layui.css" type="text/css"/>
+    <script type="text/javascript" src="layui/layui.js"></script>
+    <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+    <style type="text/css">
+        .div_list {
+            width: 75%;
+            margin: auto;
+            margin-top: 50px;
+            margin-left: 13%;
+        }
+
+        .div_select {
+            width: 55%;
+            margin: auto;
+            margin-top: 50px;
+            margin-left: 20%;
+        }
+
+        font {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        table {
+            margin: 0 auto;
+
+        }
+
+        table tr td {
+            text-align: center;
+            width: 150px;
+            height: 40px;
+        }
+
+        a {
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #form1 {
+            width: 200px;
+            display: inline-block
+        }
+
+        .panelpanel-default {
+            width: 50%;
+            height: 60%;
+        }
+    </style>
+</head>
+<body>
+<div class="panelpanel-default" style="margin-left: 25%">
+    <div class="panel-heading" align="center" style="font-size: 20px">课程信息</div>
+    <table class="layui-table" lay-size="sm">
+        <colgroup>
+            <col width="150">
+            <col width="200">
+            <col>
+        </colgroup>
+        <thead>
+        <tr>
+            <td>编号</td>
+            <td>科目名称</td>
+            <td>所在班级</td>
+            <td>代课老师</td>
+            <td>开课时间</td>
+        </tr>
+        </thead>
+        <tr th:EACH="courses : ${Course}">
+            <td th:TEXT="${courses.course_id}">p</td>
+            <td th:TEXT="${courses.course_name}">p</td>
+            <td th:TEXT="${courses.className}">l</td>
+            <td th:TEXT="${courses.tea_name}">p</td>
+            <td th:TEXT="${courses.courseDate}">p</td>
+            <!--<td th:TEXT="${coursesStat.index}">p</td>-->
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<script>
+    //Demo
+    layui.use('form', function () {
+        var form = layui.form;
+    });
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

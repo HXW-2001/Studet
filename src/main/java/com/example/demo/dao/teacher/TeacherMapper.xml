@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.teacher.TeacherMapper">
+
+    <!--查询学生所学课程-->
+    <select id="findCourse_CourseName" resultType="Course">
+        SELECT course_id,course_name FROM course
+    </select>
+    <!--学生账号添加-->
+    <insert id="AddStudnet" parameterType="Student">
+        INSERT INTO student (stu_num,stu_name,class_id,department,entrydate,account,major_id,randow,`password`)
+        VALUES(#{stu_num},#{stu_name},#{class_id},#{department},#{entrydate},#{account},#{major_id},#{randow},#{password})
+    </insert>
+
+    <!--按老师身份来查询是否存在这个身份证-->
+    <select id="ThearchUserName" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM teacher WHERE account=#{account}
+    </select>
+
+    <!--按学生身份来查询是否存在这个身份证-->
+    <select id="StudentUserName" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM student WHERE account=#{account}
+    </select>
+
+    <!--按老师身份来查询是否存在这个身份证-->
+    <select id="CountPrd" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM teacher WHERE card=#{card}
+    </select>
+
+    <!--按学生身份来查询是否存在这个身份证-->
+    <select id="CountStudnePad" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM student WHERE identity=#{identity}
+    </select>
+
+    <!--按老师身份证来查询老师账户-->
+    <select id="ThearchAccount" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM teacher WHERE card=#card AND account=#account
+    </select>
+    <!--按学生身份证来查询学生账户-->
+    <select id="StudnetAccount" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM student WHERE identity=#identity AND account=#account
+    </select>
+
+    <!--新-->
+    <!--老师查询学生的个人信息-->
+    <select id="teaCherQuery" resultType="ScoreCustom" parameterType="Integer">
+        SELECT s.stu_num,s.stu_name,s.stu_sex,o.old_name,stu_age,c.className,s.phone,s.identity,t.tea_name,
+        u.course_name,s.address,s.department,s.entrydate,s.email FROM
+        student s,class c,OLD o,course u,score e ,teacher t WHERE s.class_id=c.id AND c.id=t.id AND
+        s.major_id=u.course_id AND c.id=o.id AND s.stu_num=e.stu_num and t.id=#{id}
+    </select>
+
+    <!--老师按ID查询单个学生信息-->
+    <select id="teCherStudnets" parameterType="Integer" resultType="ScoreCustom">
+        SELECT s.stu_num,s.stu_name,s.stu_sex,o.old_name,s.stu_age,c.className,s.phone,s.identity,t.tea_name,
+        u.course_name,s.address,s.department,s.entrydate,s.email FROM
+        student s,class c,OLD o,course u,score e ,teacher t WHERE s.class_id=c.id AND c.id=t.id AND
+        s.major_id=u.course_id AND c.id=o.id AND s.stu_num=e.stu_num AND s.stu_num=#{stu_num}
+    </select>
+
+    <!--老师删除一个学生信息-->
+    <delete id="teChereliMinationStudent" parameterType="Integer">
+        DELETE FROM student WHERE stu_num=#{stu_num}
+    </delete>
+
+    <!--异步按学生学号查询是否存在此学生在学生表中（再进行添加）-->
+    <select id="inFormation" parameterType="Integer" resultType="AdditionScoreCustom">
+        SELECT
+        s.stu_num,s.stu_name,s.class_id,s.major_id,l.tea_id,s.stu_id,l.old_id,l.className,r.course_name,t.tea_name,d.old_name,d.id
+        FROM student s,score c,class l,course r, OLD d,teacher t
+        WHERE c.student_id=s.stu_id AND s.class_id=l.id AND l.tea_id=t.id AND l.old_id=d.id AND l.course_id=r.course_id
+        AND s.stu_num=#{stu_num} AND t.id=#{id}
+    </select>
+
+    <!--老师添加学生信息-->
+    <insert id="AddStudentScore" parameterType="Score">
+        INSERT INTO score VALUES(NULL
+        ,#{stu_num},#{stu_name},#{class_id},#{course_id},#{score_grade},#{tea_id},#{student_id},#{old_id},#{examination})
+    </insert>
+
+    <!--老师查询自己的信息-->
+    <select id="teacherPersonal" parameterType="Integer" resultType="Teacher">
+        SELECT t.*,l.className,c.course_name FROM teacher t,class l,course c WHERE t.class_id=l.id AND
+        l.course_id=c.course_id AND t.id=#{id}
+    </select>
+
+    <!--老师登陆方法-->
+    <select id="teacherLogin" parameterType="Teacher" resultType="Integer">
+        SELECT COUNT(*) FROM teacher WHERE account=#{account} AND PASSWORD=#{password}
+    </select>
+
+    <!--根据用户名来查询登陆者随机数-->
+    <select id="teacherRandow" parameterType="String" resultType="Teacher">
+        SELECT randow,id FROM teacher WHERE account=#{account}
+    </select>
+
+    <!--老师修改个人信息-->
+    <update id="updateTeacher" parameterType="Teacher">
+        UPDATE teacher SET
+        tea_name=#{tea_name},tea_sex=#{tea_sex},tea_age=#{tea_age},phone=#{phone},address=#{address},card=#{card},email=#{email}
+        WHERE id=#{id}
+    </update>
+
+    <!--老师查看所有老师的课程安排信息-->
+    <select id="teacherCourse" parameterType="Integer" resultType="Course">
+        SELECT r.course_id,r.course_name,r.courseDate,c.className,t.tea_name,r.class_id
+        FROM course r,class c,teacher t WHERE r.class_id=c.id AND c.tea_id=t.id AND t.id=#{id}
+    </select>
+
+
+</mapper>

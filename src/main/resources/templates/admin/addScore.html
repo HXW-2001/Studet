@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My JSP 'addStudent.jsp' starting page</title>
+
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="This is my page">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!--引入leiUI-->
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <script type="text/javascript/javascript" src="jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="layui/layui.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script>
+        //Demo
+        layui.use('form', function () {
+            var form = layui.form;
+        });
+    </script>
+    <style type="text/css">
+        .div_ads {
+            width: 75%;
+            margin: 0 auto;
+            margin-top: 50px;
+            margin-left: 10%;
+        }
+
+        table {
+            margin: 0 auto;
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0px 10px;
+        }
+
+        table tr td {
+            text-align: center;
+            width: 150px;
+            height: 44px;
+        }
+
+        font {
+            color: red;
+            font-weight: bold;
+        }
+
+        .layui-form-item {
+            width: 800px;
+            height: 50px;
+        }
+
+        #div_Sub {
+            width: 1200px;
+            height: 720px;
+
+        }
+
+        .xtn {
+            width: 1300px;
+            height: 720px;
+        }
+
+        #tj {
+            left: 900px;
+        }
+
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $("#num").blur(function () {
+                var json = {stu_num: $("#num").val(), id: $("#Id").val()};
+                $.ajax({
+                    type: "Get",
+                    url: "inFormation",
+                    data: json,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data == null || data == 0) {
+                            $("#001").html("不存在该学生!");
+                            return false;
+                        } else {
+                            for (var i = 0; i < data.length; i++) {
+                                //把异步查询的值放入到指定框中显示出来
+                                $("#stu_name").attr("value", data[i].stu_name);
+                                $("#class_id").attr("value", data[i].className);
+                                $("#major_id").attr("value", data[i].course_name);
+                                $("#tea_id").attr("value", data[i].tea_name);
+                                $("#stu_id").attr("value", data[i].stu_id);
+                                //这个是我们要添加的值放入隐藏域中
+                                $("#StuName").attr("value", data[i].stu_name);
+                                $("#MajorId").attr("value", data[i].major_id);
+                                $("#ClassId").attr("value", data[i].class_id);
+                                $("#TeaId").attr("value", data[i].tea_id);
+                                $("#oldIds").attr("value", data[i].old_id);
+                            }
+                        }
+                    }
+                });
+            });
+            $("#num").click(function () {
+                $("#001").html(null);
+            });
+            $("#score").click(function () {
+                $("#002").html(null);
+            });
+            $("#date").click(function () {
+                $("#003").html(null);
+            });
+            $("#score").blur(function () {
+                var score = $("#score").val()
+                if (score == null || score == "") {
+                    $("#002").html("请输入成绩!")
+                    return false;
+                }
+            });
+
+            $("#date").blur(function () {
+                var date = $("#date").val()
+                if (date == null || date == "") {
+                    $("#003").html("请输入考试日期!")
+                    return false;
+                }
+            });
+
+
+        });
+    </script>
+</head>
+
+<body>
+<div align="right" class="xtn">
+    <form th:action="@{/AddStudentScore}" method="post">
+        <div class="studnet" align="center"><h2>添加学生成绩</h2><br/></div>
+        <!--这里是获取我们的老师的ID-->
+        <input type="hidden" th:value="${session.teacher.getId()}" id="Id">
+        <div class="layui-form-item">
+            <label class="layui-form-label">学号</label>
+            <div class="layui-input-inline">
+                <!--&lt;!&ndash;form表单提交的name值&ndash;&gt;-->
+                <!--<input type="hidden" name="stu_num" lay-verify="required" autocomplete="off" id="StuNum"-->
+                <!--class="layui-input"/>-->
+                <!--异步查询放入的input框-->
+                <input type="text" name="stu_num" lay-verify="required" autocomplete="off" id="num"
+                       class="layui-input"/>
+            </div>
+            <label id="001" style="color: red;font-size: 12px;" type="right"></label>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-inline">
+                <!--&lt;!&ndash;form表单提交的name值&ndash;&gt;-->
+                <!--<input type="hidden" name="stu_name" lay-verify="required" autocomplete="off" id="StuName"-->
+                <!--class="layui-input"/>-->
+                <!--异步查询放入的input框-->
+                <input type="text" name="stu_name" autocomplete="off" class="layui-input" id="stu_name">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">班级</label>
+            <div class="layui-input-inline">
+                <!--form表单提交的name值-->
+                <input type="hidden" name="class_id" lay-verify="required" autocomplete="off" id="ClassId"
+                       class="layui-input"/>
+                <!--异步查询放入的input框-->
+                <input type="text" name="" autocomplete="off" class="layui-input" id="class_id">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">课程</label>
+            <div class="layui-input-inline">
+                <!--form表单提交的name值-->
+                <input type="hidden" name="course_id" lay-verify="required" autocomplete="off" id="MajorId"
+                       class="layui-input"/>
+                <!--异步查询放入的input框-->
+                <input type="text" name="" autocomplete="off" class="layui-input" id="major_id">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">成绩</label>
+            <div class="layui-input-inline">
+                <!--&lt;!&ndash;form表单提交的name值&ndash;&gt;-->
+                <!--<input type="hidden" name="score_grade" lay-verify="required" autocomplete="off"-->
+                <!--class="layui-input"/>-->
+                <!--异步查询放入的input框-->
+                <input type="text" name="score_grade" lay-verify="required" autocomplete="off" id="score"
+                       class="layui-input">
+            </div>
+            <label id="002" style="color: red;font-size: 12px;" type="right"></label>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">教员</label>
+            <div class="layui-input-inline">
+                <!--form表单提交的name值-->
+                <input type="hidden" name="tea_id" lay-verify="required" autocomplete="off" id="TeaId"
+                       class="layui-input"/>
+                <!--异步查询放入的input框-->
+                <input type="text" name="" autocomplete="off" class="layui-input" id="tea_id">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">编号</label>
+            <div class="layui-input-inline">
+                <!--&lt;!&ndash;form表单提交的name值&ndash;&gt;-->
+                <!--<input type="hidden" name="student_id" lay-verify="required" autocomplete="off" id="StudentId"-->
+                <!--class="layui-input"/>-->
+                <!--异步查询放入的input框-->
+                <input type="text" name="student_id" lay-verify="required" autocomplete="off" id="stu_id"
+                       class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">日期</label>
+            <div class="layui-input-inline">
+                <!--&lt;!&ndash;form表单提交的name值&ndash;&gt;-->
+                <!--<input type="hidden" name="examination" lay-verify="required" autocomplete="off"-->
+                <!--class="layui-input"/>-->
+                <!--异步查询放入的input框-->
+                <input type="text" name="examination" lay-verify="required" autocomplete="off" id="date"
+                       class="layui-input">
+            </div>
+            <label id="003" style="color: red;font-size: 12px;" type="right"></label>
+            <!--添加年纪ID隐藏域-->
+            <input type="hidden" name="old_id" lay-verify="required" autocomplete="off" id="oldIds"/>
+
+        </div>
+        <div class="layui-form-item" id="div_Sub" align="center">
+            <div class="layui-input-block">
+                <button class="layui-btn" type="submit" lay-submit lay-filter="formDemo" id="tj"
+                        style="margin-right:30px">添加
+                </button>
+                <button type="reset" class="layui-btn layui-btn-primary" id="cz" style="margin-right:210px">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

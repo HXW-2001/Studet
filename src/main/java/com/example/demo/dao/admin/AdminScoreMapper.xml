@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.admin.AdminScoreMapper">
+
+    <!--查询学生班级及成绩分数-->
+    <select id="findClass_ClassName" resultType="Student">
+        SELECT t.`stu_num`,t.`stu_name`,c.`className`,o.`old_name`,e.course_name,s.`score_grade`
+        FROM score AS s
+        INNER JOIN student AS t ON s.`student_id` = t.`stu_id`
+        INNER JOIN class AS c ON s.`class_id` = c.`id`
+        INNER JOIN `old` AS o ON c.`old_id` = o.`id`
+        INNER JOIN course AS e ON c.`course_id` =e.`course_id`
+        INNER JOIN teacher AS r ON c.`tea_id` =r.`id`
+        ORDER BY s.`score_grade` DESC
+    </select>
+
+
+    <select id="findScoreByStu_num1" resultType="Student" parameterType="int">
+        SELECT t.`stu_num`,t.`stu_name`,c.`className`,o.`old_name`,e.course_name,s.`score_grade` ,
+        (SELECT COUNT(0) FROM class AS c,student AS s,score AS r WHERE c.`id` = s.class_id AND r.`student_id`=s.`stu_id`
+        AND c.id =1 ) AS stu_count,
+        (SELECT AVG(score_grade) FROM class AS c,student AS s,score AS r WHERE c.`id` = s.class_id AND
+        r.`student_id`=s.`stu_id` AND c.id =1 ) AS stu_avg
+        FROM score AS s
+        INNER JOIN student AS t ON s.`student_id` = t.`stu_id`
+        INNER JOIN class AS c ON s.`class_id` = c.`id`
+        INNER JOIN `old` AS o ON c.`old_id` = o.`id`
+        INNER JOIN course AS e ON c.`course_id` =e.`course_id`
+        INNER JOIN teacher AS r ON c.`tea_id` =r.`id`
+        WHERE s.`stu_num`=#{stu_num}
+    </select>
+
+</mapper>

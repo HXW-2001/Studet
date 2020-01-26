@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学生信息</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="layui/css/layui.css" type="text/css"/>
+    <script type="text/javascript" src="layui/layui.js"></script>
+    <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+    <style type="text/css">
+        .div_list {
+            width: 75%;
+            margin: auto;
+            margin-top: 50px;
+            margin-left: 13%;
+        }
+
+        .div_select {
+            width: 55%;
+            margin: auto;
+            margin-top: 50px;
+            margin-left: 20%;
+        }
+
+        font {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        table {
+            margin: 0 auto;
+
+        }
+
+        table tr td {
+            text-align: center;
+            width: 150px;
+            height: 40px;
+        }
+
+        a {
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #form1 {
+            width: 200px;
+            display: inline-block
+        }
+
+        .panelpanel-default {
+            width: 82%;
+            height: 60%;
+        }
+    </style>
+</head>
+<body>
+<div class="panelpanel-default" style="margin-left: 15%">
+    <div class="panel-heading">学生信息</div>
+    <table class="layui-table" lay-size="sm">
+        <colgroup>
+            <col width="150">
+            <col width="100">
+            <col>
+        </colgroup>
+        <thead>
+        <tr>
+            <td>学号</td>
+            <td>名称</td>
+            <td>性别</td>
+            <td>年龄</td>
+            <td>班级</td>
+            <td>年纪</td>
+            <td>电话</td>
+            <td>家长电话</td>
+            <td>身份证</td>
+            <td>所学课程</td>
+            <td>家庭住址</td>
+            <td>学校</td>
+            <td>email</td>
+            <td>入学时间</td>
+        </tr>
+        </thead>
+        <tr th:each="teacher_xinXis : ${teacher_xinXi}">
+            <td th:text="${teacher_xinXis.stu_num}">p</td>
+            <td th:text="${teacher_xinXis.stu_name}">p</td>
+            <td th:text="${teacher_xinXis.stu_sex}">p</td>
+            <td th:text="${teacher_xinXis.stu_age}">p</td>
+            <td th:text="${teacher_xinXis.className}">p</td>
+            <td th:text="${teacher_xinXis.old_name}">p</td>
+            <td th:text="${teacher_xinXis.phone}">p</td>
+            <td th:text="${teacher_xinXis.relation}">p</td>
+            <td th:text="${teacher_xinXis.identity}">p</td>
+            <td th:text="${teacher_xinXis.course_name}">p</td>
+            <td th:text="${teacher_xinXis.address}">p</td>
+            <td th:text="${teacher_xinXis.department}">p</td>
+            <td th:text="${teacher_xinXis.email}">p</td>
+            <td th:text="${teacher_xinXis.entrydate}">p</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<script>
+    //Demo
+    layui.use('form', function () {
+        var form = layui.form;
+    });
+</script>
+
+</body>
+</html>

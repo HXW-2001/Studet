@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="This is my page">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!--引入leiUI-->
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <script type="text/javascript/javascript" src="jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="layui/layui.js"></script>
+    <script src="js/jquery.min.js"></script>
+
+    <style type="text/css">
+        .div_ads {
+            width: 70%;
+            margin: 0 auto;
+            margin-top: 20px;
+
+        }
+
+        #tableClass {
+            margin: 0 auto;
+            width: 50%;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .layui-form-item {
+            padding-left: 158px;
+        }
+    </style>
+    <script>
+        //Demo
+        layui.use('form', function () {
+            var form = layui.form;
+            //监听提交
+        });
+    </script>
+</head>
+<body>
+<form class="layui-form" action="/updateFindStudent" method="post">
+    <div class="div_ads panel panel-default">
+        <div class="panel-heading" align="center" style="font-size: 20px">修改个人信息</div>
+        <table class="table panel-body" id="tableClass">
+            <div class="div_ads">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">姓名:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="stu_name" required lay-verify="required" readonly="readonly"
+                               autocomplete="off" class="layui-input" th:value="${studentByid.stu_name}">
+                        <input type="hidden" name="stu_id" required lay-verify="required" readonly="readonly"
+                               autocomplete="off" class="layui-input" th:value="${studentByid.stu_id}">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">性别:</label>
+                    <div class="layui-input-block">
+                        <a th:if="${studentByid.stu_sex}=='男'">
+                            <input type="radio" name="stu_sex" value="男" title="男" checked="男">
+                            <input type="radio" name="stu_sex" value="女" title="女">
+                        </a>
+                        <a th:if="${studentByid.stu_sex}=='女'">
+                            <input type="radio" name="stu_sex" value="男" title="男">
+                            <input type="radio" name="stu_sex" value="女" title="女" checked="女">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">电话:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" th:name="phone" required lay-verify="required" autocomplete="off"
+                               class="layui-input" th:value="${studentByid.phone}">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">年龄:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="stu_age" required lay-verify="required" autocomplete="off"
+                               class="layui-input" th:value="${studentByid.stu_age}">
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">家属号:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="relation" required lay-verify="required" autocomplete="off"
+                               class="layui-input" th:value="${studentByid.relation}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">地址:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="address" required lay-verify="required" autocomplete="off"
+                               class="layui-input" th:value="${studentByid.address}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">身份证:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="identity" required lay-verify="required" autocomplete="off"
+                               class="layui-input" th:value="${studentByid.identity}">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">邮箱:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="email" required lay-verify="required" autocomplete="off"
+                               class="layui-input" th:value="${studentByid.email}">
+                    </div>
+                </div>
+
+                <div class="layui-form-item" style="margin-left: -1%">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="formDemo">修改</button>
+
+                    </div>
+                </div>
+            </div>
+        </table>
+    </div>
+</form>
+</body>
+</html>

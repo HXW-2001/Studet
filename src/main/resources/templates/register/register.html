@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>找回密码</title>
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="This is my page">
+    <link href="css2/bootstrap.min.css" rel="stylesheet">
+    <link href="css2/gloab.css" rel="stylesheet">
+    <link href="css2/index.css" rel="stylesheet">
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/register.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link href="css/top.css" rel="stylesheet" type="text/css"/>
+    <script src="js/jquery.min.js"></script>
+</head>
+
+<style type="text/css">
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(to bottom, #243949 0%, #517fa4 100%);
+        overflow: hidden;
+    }
+
+    canvas {
+        position: absolute;
+        top: 0;
+    }
+
+    .div_ads {
+        z-index: 3;
+        width: 30%;
+        margin: 0 auto;
+        margin-top: 50px;
+        border: 1px solid #ccc;
+        background: rgba(238, 235, 235, 1);
+        position: relative;
+        border-radius: 6px;
+        height: 650px;
+    }
+
+    table {
+        position: absolute;
+        left: 10%;
+    }
+
+    table tr td {
+        text-align: center;
+        height: 44px;
+        width: 8%;
+        text-align: center;
+    }
+
+    h3 {
+        text-align: center;
+        padding-top: 20px;
+    }
+
+    hr {
+        margin-left: 15px;
+        margin-right: 15px;
+        background: #ccc;
+    }
+
+    .btn1 {
+        background: #afc5d6;
+    }
+
+    font {
+        font-size: .7rem;
+        float: left;
+    }
+
+    html, body {
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+
+    .mask, .mask-mask {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.1);
+        z-index: 99;
+    }
+
+    .mask-mask {
+        z-index: 100 !important;
+    }
+
+    .mask-content {
+        position: relative;
+        z-index: 101 !important;
+    }
+
+    #alert, #alert-content {
+        display: none;
+    }
+
+    #alert-content {
+        min-width: 320px;
+        max-width: 540px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 5px 15px;
+        border-radius: 2px;
+        transform: translateY(130%);
+        word-break: break-all;
+    }
+
+    #alert-content > p {
+        margin: 6px 0;
+    }
+
+    #alert-content-text {
+        text-indent: 2em;
+        padding: 10px 4px;
+        font-size: 18px;
+    }
+
+    #alert-close {
+        display: block;
+        margin: 0 auto;
+        padding: 4px 20px;
+        font-size: 16px;
+        border-radius: 2px;
+        background-color: #ffbd39;
+        color: #fff;
+        cursor: pointer;
+        border: none;
+    }
+
+    /*单选框位置*/
+    .div_radion {
+        font-size: 16.5px;
+        width: 95%;
+        margin-right: 12%;
+        letter-spacing: 5.7px;
+    }
+</style>
+<script language="javascript" type="text/javascript" src="https://ui.ptlogin2.qq.com/js/ptloginout.js"></script>
+<script language="javascript" type="text/javascript" src="/v2/js/jquery.min.js?v=2.1"></script>
+
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/particle-bg.umd.min.js"></script>
+<script type="text/javascript">
+    window.onload = function () {
+        particleBg('body', {
+            color: 'rgba(255, 255, 255, 0.5)'
+        });
+        $(function () {
+            //点击填写完账户信息下一步显示下一个页面
+            $("#btn_part1").click(function () {
+                document.getElementById("part1").style.display = "none";//隐藏
+                document.getElementById("part2").style.display = "";//显示
+
+                document.getElementById("x3").className = "col-xs-4 on";//col-xs-4 on为新的属性值
+                document.getElementById("x3").setAttribute("class", "col-xs-4 on");
+                $("#xsyzm").hide();
+            });
+
+
+            //点击填写完账户信息下一步显示下一个页面
+            $("#btn_part2").click(function () {
+                document.getElementById("part1").style.display = "none";//隐藏
+                document.getElementById("part2").style.display = "none";//隐藏
+                document.getElementById("part3").style.display = "";//显示
+
+                document.getElementById("x4").className = "col-xs-4 on";//col-xs-4 on为新的属性值
+                document.getElementById("x4").setAttribute("class", "col-xs-4 on");
+            });
+
+            //点击第一个账户失焦事件
+            $("#username").blur(function () {
+                var Username = $("#username").val();
+                if (Username == null || Username == "") {
+                    $("#pans").hide();
+                    $("#001").html("输入账户不能为空");
+                    return false;
+                    //判断是否存在用户
+                } else if (document.getElementById("radios").checked == true) {
+                    var json = {account: $("#username").val()};
+                    $.ajax({
+                        type: "GET",
+                        url: "ThearchUserName",
+                        data: json,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data == 0) {
+                                $("#pans").html(null);
+                                $("#001").html("不存在该老师用户账号");
+                                return false;
+                            }
+                            return true;
+                        }
+                    });
+                    //判断是否存在这个老师账户和身份证是否对应
+                    var json = {account: $("#username").val(), card: $("#pard").val()};
+                    $.ajax({
+                        type: "GET",
+                        url: "ThearchAccount",
+                        data: json,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data == 0) {
+                                $("#pans").html(null);
+                                $("#001").html("该老师账户或者身份证有误！");
+                                return false;
+                            }
+                            return true;
+                        }
+                    });
+                } else if (document.getElementById("radio").checked == true) {
+                    var json = {account: $("#username").val()};
+                    $.ajax({
+                        type: "GET",
+                        url: "StudentUserName",
+                        data: json,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data == 0) {
+                                $("#pans").html(null);
+                                $("#001").html("不存在该学生用户账号");
+                                return false;
+                            }
+                            return true;
+                        }
+                    });
+                    //判断是否存在这个学生账户和身份证是否对应
+                    var json = {identity: $("#username").val(), card: $("#pard").val()};
+                    $.ajax({
+                        type: "GET",
+                        url: "StudnetAccount",
+                        data: json,
+                        dataType: "json",
+                        success: function (data) {
+                            alert(data);
+                            if (data == 0) {
+                                $("#pans").html(null);
+                                $("#001").html("该学生账户或者身份证有误！");
+                                return false;
+                            }
+                            return true;
+                        }
+                    });
+                }
+            });
+
+            $("#pard").blur(function () {
+                //获取学生身份值
+                var radio = $("#radio").val();
+
+                //获取身份证
+                var pard = $("#pard").val();
+
+                if (pard == null || pard == "") {
+                    $("#pans").hide();
+                    $("#prd").hide();
+                    $("#002").html("身份证不能为空");
+                    return false;
+                } else {
+                    //	正则验证身份证
+                    var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+                    if (reg.test(pard) === false) {
+                        $("#pans").hide();
+                        $("#prd").hide();
+                        $("#002").html(null);
+                        $("#002").html("身份证输入格式不对!");
+                        return false;
+                    }
+
+                }
+                //判断学生是否存在
+                if (document.getElementById("radio").checked == true) {
+                    $("#rad").hide();
+                    //异步查询是否有此身份的身份证号
+                    var json = {identity: $("#pard").val()};
+                    $.ajax({
+                        type: "GET",
+                        url: "CountStudnePad",
+                        data: json,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data == 0) {
+                                $("#prd").html(null);
+                                $("#002").html(null);
+                                $("#ajx").html("不存在该用户身份证,学生");
+                                return false;
+                            }
+                        }
+                    });
+                }
+                //判断老师是否存在
+                if (document.getElementById("radios").checked == true) {
+                    $("#rad").hide();
+                    //异步查询是否有此身份的身份证号
+                    var json = {card: $("#pard").val()};
+                    $.ajax({
+                        type: "GET",
+                        url: "CountPrd",
+                        data: json,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data == 0) {
+                                $("#prd").html(null);
+                                $("#002").html(null);
+                                $("#ajx").html("不存在该用户身份证,老师");
+                                return false;
+                            }
+                            return true;
+                        }
+                    });
+                }
+
+            });
+            $("#password").blur(function () {
+                //获取新密码
+                var password = $("#password").val();
+
+                if (password == null || password == "") {
+                    $("#ps").hide();
+                    $("#004").html("新密码不能为空!");
+                    return false;
+                } else {
+                    if (password.length < 6) {
+                        $("#004").hide();
+                        $("#003").html("新密码不能低于6位!");
+                        return false;
+                    }
+                }
+            });
+
+
+            $("#rePassword").blur(function () {
+                //获取新密码
+                var password = $("#password").val();
+                //确定密码
+                var rePassword = $("#rePassword").val();
+                if (rePassword == null || rePassword == "") {
+                    $("#rpd").hide();
+                    $("#005").html("确定密码不能为空!");
+                    return false;
+                } else {
+                    if (rePassword.length < 6) {
+                        alert(rePassword.length);
+                        $("#005").hide();
+                        $("#006").html("新密码不能低于6位!");
+                        return false;
+                    }
+                }
+                if (rePassword != password) {
+                    $("#006").hide();
+                    $("#007").html("两次密码不一致!");
+                    return false;
+                }
+            });
+            //获取到焦点清空内容
+            $("#username").focus(function () {
+                $("#001").html(null);
+            });
+            $("#pard").focus(function () {
+                $("#ajx").html(null);
+                $("#002").html(null);
+            });
+            $("#password").focus(function () {
+                $("#003").html(null);
+                $("#004").html(null);
+
+            });
+            $("#rePassword").focus(function () {
+                $("#005").html(null);
+                $("#006").html(null);
+                $("#007").html(null);
+            });
+        });
+    }
+</script>
+<body>
+<form th:action="@{/UpdatAccount(radio=0,radios=1)}" method="post">
+    <div class="login-box f-mt10 f-pb50" align="center">
+        <div class="main bgf">
+            <div class="reg-box-pan display-inline">
+                <div class="step">
+                    <ul>
+                        <li class="col-xs-4 on" id="x2">
+                            <span class="num"><em class="f-r5"></em><i>1</i></span>
+                            <span class="line_bg lbg-r"></span>
+                            <p class="lbg-txt">填写账户信息</p>
+                        </li>
+                        <li class="col-xs-4 " id="x3">
+                            <span class="num"><em class="f-r5"></em><i>2</i></span>
+                            <span class="line_bg lbg-l"></span>
+                            <span class="line_bg lbg-r"></span>
+                            <p class="lbg-txt">验证账户信息</p>
+                        </li>
+                        <li class="col-xs-4 " id="x4">
+                            <span class="num"><em class="f-r5"></em><i>3</i></span>
+                            <span class="line_bg lbg-l"></span>
+                            <p class="lbg-txt">修改成功</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="reg-box" id="verifyCheck" style="margin-top:20px;">
+                    <div class="part1" id="part1">
+                        <div class="item col-xs-12">
+                            <span class="intelligent-label f-fl"><b class="ftx04">*</b>账号：</span>
+                            <div class="f-fl item-ifo">
+                                <input type="text" maxlength="20" class="txt03 f-r3 required" id="username"
+                                       name="username"/>
+
+                                <label class="focus"><span id="001" style="color: red;font-size: 12px;"
+                                                           th:align="left"></span><span id="pans">3-20位，中文、字母、数字、下划线的组合，以中文或字母开头</span></label>
+                            </div>
+                        </div>
+
+                        <div class="item col-xs-12">
+                            <span class="intelligent-label f-fl"><b class="ftx04">*</b>身份：</span>
+                            <div class="f-fl item-ifo">
+                                <div class="div_radion">
+                                    <input id="radio" type="radio" name="role_id" value="0">学生
+                                    <input id="radios" type="radio" name="role_id" value="1">教师
+                                </div>
+                                <span class="ie8 icon-close close hide" style="right:55px"></span>
+                                <span class="showpwd" data-eye="password"></span>
+                                <label class="icon-sucessfill blank hide"></label>
+                                <label class="focus"><span th:align="left" id="rad">表明你的身份</span></label>
+                                <label class="focus valid"></label>
+                                <span class="clearfix"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="item col-xs-12">
+                            <span class="intelligent-label f-fl"><b class="ftx04">*</b>身份证：</span>
+                            <div class="f-fl item-ifo">
+                                <input type="text" maxlength="20" class="txt03 f-r3 required" tabindex="4" id="pard"/>
+
+                                <label class="focus"><span id="ajx" style="color: red;font-size: 12px;"
+                                                           th:align="left"></span><span id="002"
+                                                                                        style="color: red;font-size: 12px;"
+                                                                                        th:align="left"></span><span
+                                        th:align="left" id="prd">确保身份证的正确</span></label>
+
+                                <label class="focus valid"></label>
+                            </div>
+
+                        </div>
+
+                        <div class="item col-xs-12">
+                            <span class="intelligent-label f-fl"><b class="ftx04">*</b>新密码：</span>
+                            <div class="f-fl item-ifo">
+                                <input type="password" id="password" name="password" maxlength="20"
+                                       class="txt03 f-r3 required"
+                                       tabindex="3"
+                                       style="ime-mode:disabled;" onpaste="return  false" autocomplete="off"
+                                       data-valid="isNonEmpty||between:6-20||level:2"
+                                       data-error="密码不能为空||密码长度6-20位||该密码太简单，有被盗风险，建议字母+数字的组合"/>
+                                <span class="ie8 icon-close close hide" style="right:55px"></span>
+                                <span class="showpwd" data-eye="password"></span>
+                                <label class="icon-sucessfill blank hide"></label>
+                                <label class="focus"><span id="004" style="color: red;font-size: 12px;"
+                                                           th:align="left"></span><span id="003"
+                                                                                        style="color: red;font-size: 12px;"
+                                                                                        th:align="left"></span><span
+                                        th:align="left" id="ps">6-20位英文（区分大小写）、数字、字符的组合</span></label>
+                                <label class="focus valid"></label>
+                                <span class="clearfix"></span>
+                            </div>
+                        </div>
+
+                        <div class="item col-xs-12">
+                            <span class="intelligent-label f-fl"><b class="ftx04">*</b>确定密码：</span>
+                            <div class="f-fl item-ifo">
+                                <input type="password" maxlength="20" class="txt03 f-r3 required" tabindex="4"
+                                       style="ime-mode:disabled;" onpaste="return  false" autocomplete="off"
+                                       data-valid="isNonEmpty||between:6-16||isRepeat:password"
+                                       data-error="密码不能为空||密码长度6-16位||两次密码输入不一致" id="rePassword"/>
+                                <span class="ie8 icon-close close hide" style="right:55px"></span>
+                                <span class="showpwd" data-eye="rePassword"></span>
+                                <label class="icon-sucessfill blank hide"></label>
+                                <label class="focus"><span id="007" style="color: red;font-size: 12px;"
+                                                           th:align="left"></span><span id="006"
+                                                                                        style="color: red;font-size: 12px;"
+                                                                                        th:align="left"></span><span
+                                        id="005" style="color: red;font-size: 12px;" th:align="left"></span><span
+                                        th:align="left" id="rpd">请再输入一遍上面的密码</span></label>
+                                <label class="focus valid"></label>
+                            </div>
+                        </div>
+
+                        <div class="item col-xs-12">
+                            <span class="intelligent-label f-fl">&nbsp;</span>
+                            <div class="f-fl item-ifo">
+                                <a href="javascript:;" class="btn btn-blue f-r3" id="btn_part1">下一步</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--第二个页面-->
+                    <div class="part2" id="part2" style="display:none">
+                        <div class="alert alert-info" style="width:700px" id="xsyzm">
+                            验证码已发送至您手机，请输入邮箱中的验证码，确保您的QQ邮箱真实有效。
+                        </div>
+                        <div class="item col-xs-12 f-mb10" style="height:auto">
+                            <span class="intelligent-label f-fl">QQ邮箱：</span>
+                            <div class="f-fl item-ifo" style="position: relative;">
+                                <input type="text" name="qq" id="qq" class="txt03 f-r3 qq">
+                                <span class="qqyx"
+                                      style="color: red;font-size: 12px; position: absolute; top: 2px; right: -8.8em;"></span>
+                            </div>
+                        </div>
+                        <div class="item col-xs-12">
+                            <span class="intelligent-label f-fl"><b class="ftx04">*</b>验证码：</span>
+                            <div class="f-fl item-ifo">
+                                <input type="text" maxlength="6" name="yzm" tabindex="4" id="yzm"
+                                       style="width: 190px;"
+                                       class="txt03 f-r3 required"
+                                       data-valid="isNonEmpty||maxLength||isInt"
+                                       data-error="验证码不能为空||验证码长度6位||只能输入数字"/>
+                                <input type="button" href="/send" class="yzmyzm" value="获取验证码"
+                                       style="border: none; background-color: #188dc8; color: #fff; font-size: 12px; padding: 0 7px;">
+                                <span class="yxyzm" style="display: none;"></span>
+                                <span class="ie8 icon-close close hide"></span>
+                                <label class="icon-sucessfill blank hide"></label>
+                                <label class="focus"><span th:align="left" id="rands"
+                                                           style="color: red;font-size: 12px;"></span><span
+                                        th:align="left" id="yz">6位，数字验证码</span></label>
+                                <label class="focus valid"></label>
+                            </div>
+                        </div>
+                        <div class="item col-xs-12">
+                            <span class="intelligent-label f-fl">&nbsp;</span>
+                            <div class="f-fl item-ifo">
+                                <a href="javascript:;" class="btn btn-blue f-r3" id="btn_part2">提交</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="part3" id="part3" style="display:none">
+                        <div class="item col-xs-12" align="center">
+                            <span class="intelligent-label f-fl">&nbsp;</span>
+                            <div class="f-fl item-ifo">
+                                <a href="javascript:;" class="btn btn-blue f-r3" id="btn_part3">修改成功</a>
+
+                                <p class="c-666 f-mt30 f-mb50">页面将在<strong id="times" class="f-size18">10</strong>
+                                    秒钟后，跳转到 <a
+                                            th:href="@{/login}" class="c-blue">进入登陆</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+
+<script type="text/javascript">
+    $(function () {
+        /*异步进行QQ邮箱判断，如果有显示有如果没有显示没有*/
+        $(".qq").blur(function () {
+            var yzm = $(".qq").val();
+            var s = yzm.substr(6);//截取QQ邮箱进行判断邮箱是否输入正确。
+            if (yzm == "") {
+                $(".qqyx").html("请输入QQ邮箱！");
+            } else if (s != "@qq.com" && yzm.length < 15) {
+                $(".qqyx").html("QQ邮箱格式错误");
+            } else {
+                return true;
+
+            }
+        });
+        /*获取邮箱验证码的相关功能*/
+        var html;
+        var $disableElement;
+        var timer;
+        var timeTick;
+        var timeLength = 60;
+        $(".yzmyzm").click(function () {
+            var qq1 = $(".qq").val();
+            $disableElement = $(this);
+            $disableElement.attr('disabled', true);
+            $.ajax({
+                type: "GET",//请求类型
+                url: "send",//请求的url
+                data: {
+                    qq: qq1
+                },//请求参数
+                dataType: "json",//ajax接口（请求url）返回的数据类型·
+                success: function (date) {//data：返回数据（json对象）
+                    if (date == "0") {
+                        alert("QQ邮箱输入错误，请重新输入!");
+                        $disableElement.attr('disabled', false);
+                    } else {
+                        $("#xsyzm").show();
+                        html = $(".yxyzm").html(date);
+                        $disableElement.attr('disabled', true);
+                        timeTick = 0;
+                        timer = setInterval(function () {
+                            if (timeTick >= timeLength) {
+                                $disableElement.val("获取验证码");
+                                $disableElement.attr('disabled', false);
+                                clearInterval(timer);
+                                return;
+                            }
+                            $disableElement.val(((timeLength - timeTick) >= 10 ? (timeLength - timeTick) : "0" + (timeLength - timeTick)) + "秒后重试");
+                            timeTick++;
+                        }, 1000);
+                    }
+                },
+                error: function (date) {//当访问时候，404，500 等非200的错误状态码
+
+                }
+            });
+        });
+        //第二页的确定按钮
+        $("#btn_part2").click(function () {
+//            if (!verifyCheck._click()) return;
+            var yzm = $("#yzm").val();
+            var text = $(".yxyzm").text();
+            if (yzm != text) {
+                $("#yz").hide();
+                $("#rands").html("输入验证码错误！");
+//				showAlert("验证码输入错误!");
+                return false;
+            } else {
+                var radio = $("#radio").val();
+                var radios = $("#radios").val();
+                if (document.getElementById("radios").checked == true) {
+                    var json = {card: $("#pard").val(), password: $("#password").val()};
+                    $.ajax({
+                        type: "GET",
+                        url: "UpdatTheacherAccount",
+                        data: json,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data == 1) {
+                                alert("修改成功");
+                                window.location.href = "/login";
+                                return true;
+                            }
+                            return false;
+                        }
+                    });
+                } else {
+//					alert("修改失败!");
+                    if (document.getElementById("radio").checked == true) {
+                        var json = {identity: $("#pard").val(), password: $("#password").val()};
+                        $.ajax({
+                            type: "GET",
+                            url: "updateStundentAccount",
+                            data: json,
+                            dataType: "json",
+                            success: function (data) {
+                                if (data == 1) {
+                                    alert("修改成功");
+                                    window.location.href = "/login";
+                                    return true;
+                                }
+                                return false;
+                            }
+                        });
+                    } else {
+                        alert("修改失败!");
+                    }
+                }
+            }
+        });
+    });
+</script>
+</html>
+

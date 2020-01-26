@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学生信息</title>
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="This is my page">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="layui/css/layui.css" type="text/css"/>
+    <script type="text/javascript" src="layui/layui.js"></script>
+    <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+    <srcipt type="text/javaScript">
+
+        <script>
+            //Demo
+            layui.use('form', function () {
+                var form = layui.form;
+                //监听提交
+            });
+        </script>
+    </srcipt>
+    <style type="text/css">
+        .div_list {
+            width: 75%;
+            margin: auto;
+            margin-top: 50px;
+            margin-left: 13%;
+        }
+
+        .div_select {
+            width: 55%;
+            margin: auto;
+            margin-top: 50px;
+            margin-left: 20%;
+        }
+
+        font {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        table {
+            margin: 0 auto;
+
+        }
+
+        table tr td {
+            text-align: center;
+            width: 150px;
+            height: 40px;
+        }
+
+        a {
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #form1 {
+            width: 200px;
+            display: inline-block
+        }
+
+        .div_ads {
+            width: 40%;
+            margin: 0 auto;
+            margin-top: 30px;
+            margin-left: 30%;
+        }
+
+        #tableClass {
+            margin: 0 auto;
+            width: 80%;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $(".sc").click(function () {
+                //获取input节点 我们删除节点
+                var r = confirm("确定要删除吗？");
+                if (r) {
+                    var json = {stu_num: $(this).prev().prev().val()};
+                    $.ajax({
+                        type: "GET",
+                        url: "teChereliMinationStudent",
+                        data: json,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data == 1) {
+                                alert("已经删除！");
+                                window.location.reload();
+                                return true;
+                            }
+                            return false;
+                        }
+                    });
+                } else {
+                    alert("已经取消删除！");
+                    window.location.reload();
+                }
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $(".cz").click(function () {
+                //window.location.href = "/";
+            })
+        })
+    </script>
+</head>
+<body>
+<th:if th:if="${course != null}">
+    <div class="panelpanel-default" style="margin-left: 15%">
+        <div class="panel-heading">查看课程信息</div>
+        <table class="layui-table" lay-size="sm">
+            <colgroup>
+                <col width="150">
+                <col width="100">
+                <col>
+            </colgroup>
+            <thead>
+            <thead class="layui-table" lay-size="sm">
+            <colgroup>
+                <col width="150">
+                <col width="200">
+                <col>
+            </colgroup>
+            </thead>
+            <thead>
+            <tr>
+                <td>编号</td>
+                <td>代课老师</td>
+                <td>科目名称</td>
+                <td>所学班级</td>
+                <td>开课时间</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tr th:each="courses : ${course}">
+                <td th:text="${courses.course_id}">p</td>
+                <td th:text="${courses.tea_name}">p</td>
+                <td th:text="${courses.course_name}">p</td>
+                <td th:text="${courses.className}">l</td>
+                <td th:text="${courses.courseDate}">p</td>
+                <td><a th:href="@{/findCourseByCourse_id(course_id=${courses.course_id})}">修改</a>&nbsp;&nbsp;&nbsp;<a
+                        href="#" onclick="return confirm('是否确认删除？')">删除</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+</th:if>
+
+<th:if th:if="${courseByCourse_id != null}">
+    <form class="layui-form" action="/updateCourse" method="get">
+        <div class="div_ads panel panel-default">
+            <div class="panel-heading" align="center" style="font-size: 20px">修改课程信息</div>
+            <table class="table panel-body" id="tableClass">
+                <div class="div_ads">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">科目:</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="course_name" required lay-verify="required" autocomplete="off"
+                                   class="layui-input" th:value="${courseByCourse_id.course_name}">
+                            <input type="hidden" name="course_id" required lay-verify="required" autocomplete="off"
+                                   class="layui-input" th:value="${courseByCourse_id.course_id}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="padding-left: -60%">
+                        <label class="layui-form-label">所学班级:</label>
+                        <div class="layui-input-block">
+                            <select name="class_id" lay-verify="required">
+                                <option value="0">请选择班级</option>
+                                <option th:each="classNames : ${className}" th:value="${classNames.id}"
+                                        th:text="${classNames.className}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="padding-left: -60%">
+                        <label class="layui-form-label">代课老师:</label>
+                        <div class="layui-input-block">
+                            <select name="tea_id" lay-verify="required">
+                                <option value="0">请选择代课老师</option>
+                                <option th:each="tea_name : ${tea_name}" th:value="${tea_name.id}"
+                                        th:text="${tea_name.tea_name}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">开班时间:</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="courseDate" required lay-verify="required" autocomplete="off"
+                                   class="layui-input" th:value="${courseByCourse_id.courseDate}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="margin-left: -1%">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="formDemo">修改</button>
+                            <!--<button type="button" class="layui-btn layui-btn-primary" id="cz" style="margin-right:210px">取消</button>-->
+                        </div>
+                    </div>
+                </div>
+            </table>
+        </div>
+    </form>
+</th:if>
+</body>
+</html>

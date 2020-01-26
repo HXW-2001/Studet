@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.user.UserMapper">
+    <!--用户登录-->
+    <select id="login" parameterType="User" resultType="int">
+        SELECT count(0) FROM `user` WHERE account=#{account} AND `password`=#{password}
+    </select>
+    <!--根据用户查询随机数-->
+    <select id="LoginRandow" resultType="User" parameterType="String">
+        SELECT randow FROM `user` WHERE account=#{account}
+    </select>
+
+    <!--老师账户修改账户密码-->
+    <update id="updateTherachAccount" parameterType="Teacher">
+        UPDATE teacher SET `password`=#{password} WHERE card=#{card}
+    </update>
+
+    <!--学生账户修改账户密码-->
+    <update id="updateStundentAccount" parameterType="Student">
+        UPDATE student SET `password`=#{password} WHERE identity=#{identity}
+    </update>
+
+
+</mapper>

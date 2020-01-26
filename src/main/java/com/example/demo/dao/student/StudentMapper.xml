@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.student.StudentMapper">
+    <!--学生登录-->
+    <select id="StudentLogin" parameterType="Student" resultType="int">
+        SELECT COUNT(0) FROM `student` WHERE account=#{account} AND `password`=#{password}
+    </select>
+    <!--根据用户名查询随机数-->
+    <select id="LoginRandow" resultType="Student" parameterType="String">
+        SELECT randow,stu_id,password,identity,stu_name FROM `student` WHERE account=#{account}
+    </select>
+    <!--根据id查询学生信息-->
+    <select id="findStudentByid" parameterType="Integer" resultType="Student">
+        SELECT * FROM student AS s,class AS c,course AS o
+        WHERE s.`class_id`=c.`id` AND s.`major_id`=o.`course_id` AND s.stu_id=#{stu_id}
+    </select>
+    <!--补充学生信息-->
+    <update id="updateStudent" parameterType="Student">
+        UPDATE student
+        SET
+        stu_sex=#{stu_sex},stu_age=#{stu_age},phone=#{phone},relation=#{relation},identity=#{identity},address=#{address},email=#{email}
+        WHERE stu_id=#{stu_id}
+    </update>
+    <!--查询学生个人信息-->
+    <select id="findStudent" parameterType="Integer" resultType="Student">
+        SELECT * FROM student AS s,class AS c,course AS o
+        WHERE s.`class_id`=c.`id` AND s.`major_id`=o.`course_id` AND s.stu_id=#{stu_id}
+    </select>
+    <!--学生修改个人资料-->
+    <update id="updateFindStudent" parameterType="Student">
+        UPDATE student
+        SET stu_name=#{stu_name},stu_sex=#{stu_sex},stu_age=#{stu_age},phone=#{phone},relation=#{relation},
+        identity=#{identity},address=#{address},email=#{email}
+        WHERE stu_id=#{stu_id}
+    </update>
+    <!--查询学生成绩-->
+    <select id="findScore" resultType="ScoreCustom">
+        SELECT
+        t.`stu_num`,t.`stu_name`,t.`stu_sex`,c.`className`,o.`course_name`,o.`courseDate`,d.`old_name`,s.`score_grade`,s.`examination`,a.`tea_name`,t.`stu_age`
+        FROM score AS s,student AS t,class AS c,course AS o,`old` AS d,teacher AS a
+        WHERE s.`student_id`=t.`stu_id` AND s.`class_id`=c.`id` AND s.`course_id`=o.`course_id` AND s.`old_id`=d.`id`
+        AND s.`tea_id`=a.`id`
+        ORDER BY s.`score_grade` DESC,s.examination DESC
+    </select>
+    <!--根据学生id查询随机数-->
+    <select id="UpdFindRandow" resultType="Student" parameterType="Integer">
+        SELECT randow FROM `student` WHERE stu_id=#{stu_id}
+    </select>
+    <!--学生修改个人密码-->
+    <update id="updatePwd" parameterType="Student">
+        UPDATE student SET password=#{password},randow=#{randow} WHERE stu_id=#{stu_id}
+    </update>
+    <!--修改学生头像-->
+    <update id="updateHead" parameterType="Student">
+        UPDATE student SET head=${head} WHERE stu_id=${stu_id}
+    </update>
+
+    <!--多条件查询学生信息-->
+    <select id="multitermFindScore" resultType="ScoreCustom" parameterType="Student">
+        SELECT
+        t.`stu_num`,
+        t.`stu_name`,
+        t.`stu_sex`,
+        c.`className`,
+        o.`course_name`,
+        o.`courseDate`,
+        d.`old_name`,
+        s.`score_grade`,
+        s.`examination`,
+        a.`tea_name`,
+        t.`stu_age`
+        FROM
+        score AS s,
+        student AS t,
+        class AS c,
+        course AS o,
+        `old` AS d,
+        teacher AS a
+        WHERE s.`student_id` = t.`stu_id`
+        AND s.`class_id` = c.`id`
+        AND s.`course_id` = o.`course_id`
+        AND s.`old_id` = d.`id`
+        AND s.`tea_id` = a.`id`
+        AND t.`stu_num` LIKE '%${stu_num}%'
+        AND t.`stu_name` LIKE '%${stu_name}%'
+        AND t.`class_id` = #{class_id}
+        AND s.`score_grade` LIKE '%${score_grade}%'
+        AND t.`major_id` = #{major_id}
+        AND a.`tea_name` LIKE '%${tea_name}%'
+        AND s.`examination` LIKE '%${examination}%'
+        ORDER BY s.`score_grade` DESC,
+        s.examination DESC
+    </select>
+
+</mapper>
